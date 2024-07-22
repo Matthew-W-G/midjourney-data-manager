@@ -1,0 +1,45 @@
+.env
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/manager-client/node_modules
+/manager-server/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+/manager-client/coverage
+/manager-server/coverage
+
+# production
+/build
+/manager-client/build
+/manager-server/build
+
+# misc
+.DS_Store
+/manager-client/.DS_Store
+/manager-server/.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+/manager-client/.env.local
+/manager-client/.env.development.local
+/manager-client/.env.test.local
+/manager-client/.env.production.local
+/manager-server/.env.local
+/manager-server/.env.development.local
+/manager-server/.env.test.local
+/manager-server/.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/manager-client/npm-debug.log*
+/manager-client/yarn-debug.log*
+/manager-client/yarn-error.log*
+/manager-server/npm-debug.log*
+/manager-server/yarn-debug.log*
+/manager-server/yarn-error.log*

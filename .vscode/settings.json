@@ -1,0 +1,5 @@
+{
+    "python.terminal.activateEnvironment": true,
+    "python.pythonPath": "/Users/matthewgiuliano/Desktop/MidjourneyArchiverV3/flaskr/myenv/bin/python3",
+    "python.venvPath": "/Users/matthewgiuliano/Desktop/MidjourneyArchiverV3/myenv"
+}

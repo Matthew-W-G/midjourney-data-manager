@@ -1,0 +1,125 @@
+body {
+    background-color: black; /* Set the background color to black */
+    color: white; /* Set the default text color to white for better readability */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.searchFilterContainer {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    width: 100%;
+}
+
+.searchBox {
+    margin-left: 10px;
+    width: 30%;
+    display: flex;
+}
+
+.searchBox .formControlCustom {
+    border-radius: 10px;
+    background-color: #333; /* Grey background color */
+    color: #ccc; /* Ensures text color is readable on dark background */
+    border: 1px solid #555;
+}
+
+.searchBox .formControlCustom::placeholder {
+    color: #ccc; /* Ensures text color is readable on dark background */
+}
+
+.searchBox .formControlCustom:focus, .searchBox .formControlCustom:active {
+    background-color: #333; /* Maintain grey background on focus */
+    color: #ccc; /* Maintain text color on focus */
+    border: 1px solid #555; /* Maintain border color on focus */
+}
+
+.filterDropdown {
+    margin-left: 10px;
+}
+
+.galleryContainer {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 40px; /* Add padding to create space at the bottom */
+}
+
+.spacer {
+    height: 100px; /* Adjust this value to provide the desired space at the bottom */
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: space-between; /* Space between elements horizontally */
+    background-color: black; /* Ensure this matches the rest of your design */
+    z-index: 1000; /* Ensure the header stays above other content */
+    padding: 10px 20px; /* Add some padding to manage spacing inside the header */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+    height: 100px; /* Set a fixed height for the header */
+}
+
+.logo {
+    width: 10%;
+    height: auto; /* Keep the aspect ratio of the logo */
+}
+
+.mainContent {
+    margin-top: 100px; /* Adjust this value to prevent content from being hidden behind the fixed header */
+}
+
+.download {
+    width: 15%;
+    height: auto; /* Keep the aspect ratio of the logo */
+    margin-right: 50px;
+}
+
+/* Add styles for the floating button */
+.floatingButton {
+    border: 1px solid #555;
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff5722; /* Change this color to suit your design */
+    color: white;
+    border-radius: 50%;
+    width: 15%;
+    height: auto; /* Keep the aspect ratio of the logo */
+    font-size: 16px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 1000; /* Ensure the button stays above other content */
+
+}
+
+.floatingButton:hover {
+    background-color: #e64a19; /* Darker shade on hover */
+}
+
+/* Modal specific styles */
+.modal-header, .modal-footer {
+    color: #333; /* Grey background color */
+}
+
+.modal-body {
+    color: #333; /* Grey background color */
+}
