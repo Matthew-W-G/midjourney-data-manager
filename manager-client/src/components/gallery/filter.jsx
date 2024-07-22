@@ -34,7 +34,7 @@ function Filter() {
 
     useEffect(() => {
         const getAuthors = async () => {
-            const auths = await axios.get('http://localhost:3001/listAuthors');
+            const auths = await axios.get(`http://${process.env.REACT_APP_SERVER_ADDRESS}:3001/listAuthors`);
             setAuthorsList(auths.data);
         };
         getAuthors();
@@ -42,7 +42,7 @@ function Filter() {
 
     useEffect(() => {
         const getQualities = async () => {
-            const resp = await axios.get('http://localhost:3001/listQualities');
+            const resp = await axios.get(`http://${process.env.REACT_APP_SERVER_ADDRESS}:3001/listQualities`);
             let qualitiesList = resp.data;
             qualitiesList = qualitiesList.filter((quality) => quality !== 'No matching element found');
             setQualitiesList(qualitiesList);

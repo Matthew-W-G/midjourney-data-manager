@@ -10,7 +10,7 @@ export const FilterProvider = ({ children }) => {
     });
 
     function constructURL(offset, limit) {
-        let url = `http://localhost:3001/allImageData?offset=${offset}&limit=${limit}&prompt_text=${searchTerm}`;
+        let url = `http://${process.env.REACT_APP_SERVER_ADDRESS}:3001/allImageData?offset=${offset}&limit=${limit}&prompt_text=${searchTerm}`;
         for(const author of filters.authors) {
             url += `&author=${author}`;
         }
