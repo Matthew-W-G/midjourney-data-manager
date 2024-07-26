@@ -1,6 +1,6 @@
 import axios from 'axios';
-import Gallery from 'react-photo-gallery';
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Gallery } from 'react-grid-gallery';
 import { useInView } from 'react-intersection-observer';
 import './styles/imageGallery.css';
 import { FilterContext } from '../context/filterContext';
@@ -18,10 +18,11 @@ function ImageGallery() {
     useEffect(() => {
         const handleImgData = async () => {
             setIsLoading(true);
-            setLoadedImages([])
-            const url = constructURL(loadedImages.length, 50);
+            setLoadedImages([]);
+            const url = constructURL(0, 50);
             const newImages = await axios.get(url);
-            setLoadedImages(newImages.data);
+            const sortedImages = newImages.data.sort((a, b) => (b.id - a.id));
+            setLoadedImages(sortedImages);
             setIsLoading(false);
         };
         handleImgData();
@@ -33,40 +34,46 @@ function ImageGallery() {
                 setIsLoading(true);
                 const url = constructURL(loadedImages.length, 50);
                 const newImages = await axios.get(url);
-                setLoadedImages(loadedImages => [...loadedImages, ...newImages.data])
+                const updatedImages = [...loadedImages, ...newImages.data];
+                const sortedImages = updatedImages.sort((a, b) => (b.id - a.id));
+                setLoadedImages(sortedImages);
                 setIsLoading(false);
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
-        }
-        if (inView)
-            addImages()
+        };
+        if (inView) addImages();
     }, [inView]);
 
     function cleanImageData() {
-        return loadedImages.map((img) => {
-            return {
-                key: img.id,
-                src: img.s3_url,
-                width: img.width,
-                height: img.height
-            }
-        });
+        return loadedImages.map((img) => ({
+            src: img.s3_url,
+            width: img.width,
+            height: img.height,
+            customOverlay: (
+                <div className="custom-overlay">
+                    {img.prompt_text}
+                </div>
+            )
+        }));
     }
 
+    const images = cleanImageData();
 
     return (
         <div className="galleryContainer">
             {loadedImages.length > 0 ? (
-                <Gallery photos={cleanImageData()} key={searchTerm + JSON.stringify(filters)} />
+                <div style={{ width: '100%' }}>
+                    <Gallery rowHeight={400} images={images} enableImageSelection={false} />
+                </div>
             ) : isLoading ? (
-                <div></div>
+                <div>Loading...</div>
             ) : (
                 <img src={process.env.PUBLIC_URL + '/noImagesFound.png'} style={{ width: '20%', height: '20%' }} alt="No Images Found" />
             )}
             <div ref={ref} style={{ height: '20px' }}></div>
-            <div className="spacer"></div> {/* Spacer div to create space at the bottom */}
-            <Download></Download>
+            <div className="spacer"></div>
+            <Download />
         </div>
     );
 }
