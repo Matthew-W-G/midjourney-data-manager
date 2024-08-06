@@ -1,0 +1,130 @@
+.dataTable {
+    width: 90%;
+    margin: 20px auto; /* Center the container */
+}
+
+.total-results {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    color: white; /* Adjust color to match your theme */
+}
+
+.react-bootstrap-table {
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.react-bootstrap-table .table th {
+    font-family: Arial, sans-serif;
+    background-color: grey;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.react-bootstrap-table .table td {
+    font-family: Arial, sans-serif;
+    background-color: #3a4043; /* Dark grey background */
+    color: white;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    height: 40px; /* Set fixed row height */
+}
+
+/* Custom pagination styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    color: white;
+    background-color: #343a40;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.page-link:hover {
+    background-color: grey;
+}
+
+.page-item.active .page-link {
+    background-color: grey;
+    border-color: grey;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #343a40;
+    border-color: grey;
+}
+
+/* Dropdown menu styling */
+.pagination-dropdown .dropdown-menu {
+    background-color: #343a40; /* Dark grey background */
+    color: white; /* Text color */
+}
+
+.pagination-dropdown .dropdown-item {
+    color: white; /* Text color */
+}
+
+.pagination-dropdown .dropdown-item:hover {
+    background-color: grey; /* Hover background color */
+    color: black; /* Hover text color */
+}
+
+.expandable-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .expandable-cell:hover {
+    white-space: normal;
+    overflow: visible;
+    max-width: none;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .react-bootstrap-table .table td {
+    font-family: Arial, sans-serif;
+    background-color: #3a4043;
+    color: white;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    height: auto;
+    min-height: 40px;
+    padding: 8px;
+  }
+  
+  .react-bootstrap-table .table td:hover {
+    background-color: #4a5053;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+  
+  /* Ensure the expanded cell doesn't get cut off */
+  .react-bootstrap-table {
+    overflow: visible;
+  }
+  
+  .table-responsive {
+    overflow: visible;
+  }

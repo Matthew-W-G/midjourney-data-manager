@@ -1,0 +1,75 @@
+.parameter-item {
+    margin-bottom: 20px; /* Adjusted for better spacing between items */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .parameter-item label {
+    color: #ccc; /* Light grey for visibility */
+    flex: 1;
+    margin-right: 20px; /* Ensure spacing between label and control */
+  }
+  
+  .dropdown-custom, .slider-container {
+    flex: 3; /* Adjust width as needed */
+  }
+  
+  .dropdown-custom .dropdown-toggle {
+    width: 100%; /* Ensure dropdown fills the space */
+    text-align: left; /* Align text to the left */
+  }
+  
+  .slider-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .slider {
+    width: 100%; /* Full width */
+    background: #333; /* Darker background for the slider */
+    height: 8px;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #777; /* Grey thumb for visibility */
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .slider-values {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #aaa; /* Lighter text for the min and max values */
+  }
+  
+  .current-value {
+    position: absolute;
+    bottom: -20px; /* Position directly below the slider */
+    left: 50%;
+    transform: translateX(-50%); /* Center the element */
+    font-size: 0.9rem;
+    color: #ddd; /* Light grey for visibility */
+  }
+  
+  .modal-content {
+    background-color: #222; /* Dark theme for the modal */
+  }
+  
+  .btn-dark {
+    background-color: #444; /* Darker buttons to match theme */
+  }
+  
+  .divider {
+    border-top: 1px solid #444; /* Subtle divider for a clean look */
+  }
+  

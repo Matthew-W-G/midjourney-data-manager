@@ -1,55 +1,106 @@
-import React, { useState, useContext } from "react";
-import { Button, Modal } from "react-bootstrap";
-import './styles/imageGallery.css';
+import React, { useState, useContext, useEffect } from "react";
+import { Button } from "react-bootstrap";
+import './styles/download.css';
 import { FilterContext } from "../context/filterContext";
 import { saveAs } from 'file-saver';
 import axios from "axios";
 import JSZip from 'jszip';
 
-function Download() {
-    const { searchTerm, constructURL } = useContext(FilterContext);
-    const [showModal, setShowModal] = useState(false);
+function Download(props) {
+    const { searchTerm, filters, constructURL } = useContext(FilterContext);
     const [imageData, setImageData] = useState([]);
+    const [showToolbar, setShowToolbar] = useState(false);
+    const [displayCount, setDisplayCount] = useState(props.totalCount);
+    const [deselectAll, setDeselectAll] = useState(false);
+    const [selectAll, setSelectAll] = useState(false);
 
-    const handleShow = async () => {
-        const newImageData = await getImageData();
-        setImageData(newImageData.data);
-        setShowModal(true);
-    }
-    const handleClose = () => setShowModal(false);
+    useEffect(() => {
+        setSelectAll(false);
+        setDeselectAll(true);
+        props.handleSelectAll(false);
+    }, [searchTerm, filters])
+
+    useEffect(() => {
+        if(props.totalCount > 0) {
+            setDeselectAll(false);
+        }
+        if (!deselectAll && !selectAll) {
+            const selectedImages = props.images.filter((img) => {
+                return img.isSelected == true
+            });
+            setDisplayCount(selectedImages.length);
+        } else if (selectAll) {
+            const deselectedImages = props.images.filter((img) => {
+                return img.isSelected == false
+            });
+            setDisplayCount(props.totalCount - deselectedImages.length);
+        } else if (deselectAll) {
+            setDisplayCount(0);
+        }
+    }, [props.images, selectAll, deselectAll])
+
+    const handleDeselect = () => {
+        props.selectAll(false);
+        setDeselectAll(true);
+        setSelectAll(false);
+    };
+
+    const handleSelect = () => {
+        props.selectAll(true);
+        setSelectAll(true);
+        props.handleSelectAll(true);
+        setDeselectAll(false);
+    };
 
     const getImageData = async () => {
-        const url = constructURL(0, 1000);
+        const url = constructURL();
         try {
-            const imageData = await axios.get(url);
-            return imageData;
+            const response = await axios.get(url);
+            console.log('ImageData:', response.data);
+            // Assuming data.results might contain nested arrays of results
+            const flatResults = response.data.results.flat(); // Flatten the array if nested
+            console.log('flatResults', flatResults)
+            if (selectAll) {
+                return flatResults.filter((image) => {
+                    const matchingImage = props.images.find((img) => img.id === image.id);
+                    return !(matchingImage && !matchingImage.isSelected);
+                });
+            } else {
+                return props.images.filter((image) => {
+                    return image.isSelected;
+                });
+            }
         } catch (error) {
             console.log(`Failed to download image from ${url}`, error);
         }
     }
 
     const downloadImages = async () => {
-        console.log("Starting downloadImages process...");
+        const imageData = await getImageData();
         const zip = new JSZip();
         const folder = zip.folder(searchTerm);
-        const downloadUrls = imageData.map(img => img.url);
-
-        const downloadPromises = downloadUrls.map(async (url, i) => {
+    
+        // Sort the imageData based on the URL or any other desired attribute
+        const sortedImageData = imageData.sort((a, b) => {
+            return a.url.localeCompare(b.url); // Assuming 'url' is the attribute you want to sort by
+        });
+    
+        const downloadPromises = sortedImageData.map(async (img, i) => {
             try {
-                console.log(`Fetching image from ${url}`);
-                const response = await fetch(url, { mode: 'cors' });
+                console.log(`Fetching image from ${img.url}`);
+                const response = await fetch(img.url, { mode: 'cors' });
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const blob = await response.blob();
-                const fileName = `${searchTerm}_${i}.jpg`;
+                const fileName = `${searchTerm}_${i}.jpeg`; // Optionally, adjust the naming to include sorting logic
                 folder.file(fileName, blob);
                 console.log(`Added ${fileName} to zip.`);
             } catch (error) {
-                console.error(`Failed to download image from ${url}`, error);
+                console.error(`Failed to download image from ${img.url}`, error);
             }
         });
-
+    
         await Promise.all(downloadPromises);
-
+    
         zip.generateAsync({ type: "blob" }).then((content) => {
             console.log("Zip file created, initiating download...");
             saveAs(content, `${searchTerm}_images.zip`);
@@ -57,19 +108,41 @@ function Download() {
             console.error("Error generating zip file:", error);
         });
     };
+    
 
     return (
         <div>
-            <Modal show={showModal} onHide={handleClose} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Download {imageData.length} Images?</Modal.Title>
-                </Modal.Header>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    <Button variant="dark" onClick={downloadImages}>Yes</Button>
-                </Modal.Footer>
-            </Modal>
-            <Button className="floatingButton" variant="light" onClick={handleShow}>Download Images</Button>
+            {
+                showToolbar ?
+                    <div className="toolbar">
+                        <Button
+                            className="toolbar-button"
+                            variant="light"
+                            onClick={() => setShowToolbar(false)}>Close</Button>
+                        <Button
+                            className="toolbar-button"
+                            variant="light"
+                            onClick={() => handleDeselect()}
+                        >Deselect all</Button>
+                        <Button
+                            className="toolbar-button"
+                            variant="light"
+                            onClick={() => handleSelect()}
+                        >Select all</Button>
+                        <Button
+                            className={`toolbar-button ${displayCount ? "" : "download-block"}`}
+                            variant="light"
+                            onClick={displayCount ? downloadImages : null}
+                        >Download {displayCount} Images
+                        </Button>
+                    </div>
+                    :
+                    <Button
+                        onClick={() => setShowToolbar(true)}
+                        className="startButton"
+                        variant="light"
+                    >Download Images</Button>
+            }
         </div>
     );
 }

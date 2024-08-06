@@ -1,7 +1,7 @@
 import SearchFilter from './searchFilter';
 import './styles/imageGallery.css';
 import React from 'react';
-import Download from './download';
+import ChooseDisplay from './chooseDisplay';
 
 function Header(props) {
     return (
@@ -11,6 +11,7 @@ function Header(props) {
                 className='logo'
             />
             <SearchFilter />
+            <ChooseDisplay changeDisplay={() => props.changeDisplay()}></ChooseDisplay>
         </div>
     )
 }

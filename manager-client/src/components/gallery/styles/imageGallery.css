@@ -46,7 +46,45 @@ body {
 }
 
 .filterDropdown {
+    display: flex;
+    align-items: center;  /* This aligns children (icon and text) on the horizontal axis */
+    justify-content: center;
     margin-left: 10px;
+}
+
+.filterDropdown svg {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.chooseDisplay {
+    display: flex;
+    gap: 0; /* Ensure there's no gap between the buttons */
+}
+
+.chooseDisplay .leftButton {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-right: 0; /* Ensure there's no margin to the right */
+    width: 100px; /* Set fixed width */
+    height: 40px; /* Set fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chooseDisplay .rightButton {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 0; /* Ensure there's no margin to the left */
+    width: 100px; /* Set fixed width */
+    height: 40px; /* Set fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .galleryContainer {
@@ -92,27 +130,13 @@ body {
     margin-right: 50px;
 }
 
-/* Add styles for the floating button */
-.floatingButton {
-    border: 1px solid #555;
-    position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ff5722; /* Change this color to suit your design */
-    color: white;
-    border-radius: 50%;
-    width: 15%;
-    height: auto; /* Keep the aspect ratio of the logo */
-    font-size: 16px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    z-index: 1000; /* Ensure the button stays above other content */
 
+.modal-header, .modal-footer {
+    color: #333; /* Grey background color */
 }
 
-.floatingButton:hover {
-    background-color: #e64a19; /* Darker shade on hover */
+.modal-body {
+    color: #333; /* Grey background color */
 }
 
 /* styles/imageGallery.css */
@@ -128,14 +152,56 @@ body {
 }
 
 .custom-overlay {
-    background: rgba(0, 0, 0, 0.5); /* 50% transparency */
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7); /* 70% transparency for darker background */
     color: white;
     width: 100%;
-    text-align: center;
-    font-weight: bold;
     padding: 10px;
+    box-sizing: border-box;
+    pointer-events: auto; /* Ensure clicks are allowed */
+    cursor: pointer;
 }
 
-.react-grid-gallery .tile:hover .custom-overlay {
-    display: block;
+.custom-overlay .copy-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 16px; /* Smaller size for the icon */
+    cursor: pointer;
+    color: white; /* Ensure the icon is white */
+}
+
+.custom-overlay .overlay-text {
+    padding-top: 30px; /* Space for the icon */
+    font-size: 12px; /* Smaller text size */
+    font-weight: bold;
+}
+
+
+.custom-tag-container {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    transition: opacity 0.3s ease;
+}
+
+.custom-tag {
+    background-color: rgba(0, 0, 0, 0.7) !important; /* Dark, semi-transparent background */
+    color: #fff !important; /* White text */
+    border-radius: 4px !important;
+    padding: 4px 8px !important;
+    margin: 2px !important;
+    font-size: 12px !important;
+}
+
+.react-grid-gallery .tile .custom-tag-container {
+    opacity: 1; /* Visible by default */
+}
+
+.react-grid-gallery .tile:hover .custom-tag-container {
+    opacity: 0; /* Disappear on hover */
 }

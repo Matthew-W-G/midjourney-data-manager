@@ -11,8 +11,9 @@ function Search() {
 
     const debouncedSetSearchTerm = useCallback(
         debounce((value) => {
+            console.log('new search', value)
             setSearchTerm(value);
-        }, 300),
+        }, 1000),
         []
     );
 

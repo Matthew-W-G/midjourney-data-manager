@@ -1,23 +1,34 @@
 import React, { createContext, useState } from 'react';
 
-export const FilterContext = createContext();
+export const  FilterContext = createContext();
 
 export const FilterProvider = ({ children }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filters, setFilters] = useState({
         authors: [],
-        qualities: []
+        qualities: [],
+        parameters: {}
     });
 
-    function constructURL(offset, limit) {
-        let url = `http://${process.env.REACT_APP_SERVER_ADDRESS}:3001/allImageData?offset=${offset}&limit=${limit}&prompt_text=${searchTerm}`;
-        for(const author of filters.authors) {
-            url += `&author=${author}`;
+    function constructURL(offset = 0, limit) {
+        let url = `http://${process.env.REACT_APP_SERVER_ADDRESS}:3001/allImageData?offset=${offset}&prompt_text=${encodeURIComponent(searchTerm)}`;
+        
+        if(limit) {
+            url += `&limit=${limit}`;
         }
-        console.log(filters.qualities)
-        for(const quality of filters.qualities) {
-            url += `&qualities=${quality}`;
-        }
+        filters.authors.forEach(author => {
+            url += `&author=${encodeURIComponent(author)}`;
+        });
+
+        filters.qualities.forEach(quality => {
+            url += `&qualities=${encodeURIComponent(quality)}`;
+        });
+
+        Object.keys(filters.parameters).forEach(param => {
+            url += `&param_${encodeURIComponent(param)}=${encodeURIComponent(filters.parameters[param])}`;
+        });
+        console.log(url)
+
         return url;
     }
 

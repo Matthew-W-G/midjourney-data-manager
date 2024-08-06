@@ -1,0 +1,78 @@
+.startButton {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: black;
+    width: 15%;
+    height: 40px; /* Reduced height to original size */
+    padding: 5px; /* Adjust padding for smaller height */
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 1000;
+    border-radius: 15px;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    color: black;
+    width: 45%;
+    height: 40px; /* Same reduced height as startButton */
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 1000;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.toolbar-button {
+    flex: 1;
+    margin: 0;
+    background-color: #f8f9fa;
+    height: 100%;
+    padding: 5px 0; /* Adjust padding for smaller height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.toolbar-button.download-block {
+    color: #898b8e;
+}
+
+
+
+
+.toolbar-button:first-child {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.toolbar-button:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.toolbar-button:not(:last-child) {
+    border-right: 1px solid #ccc;
+}
+
+.toolbar-button.active {
+    background-color: #e2e6ea; /* Darker shade for active button */
+}
